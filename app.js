@@ -1,4 +1,12 @@
 // normally you keep all the express configuration in app.js
+// Restful API: Representational State Transfer
+// Building it requires following these principles:
+// 1: Separate API into logical resources
+// 2: Expose structured, resource-based URLs
+// 3: Use HTTP methods (verbs) - CRUD - POST, GET, PUT, PATCH, DELETE
+// 4: Send data as JSON (usually)
+// 5: Be stateless
+
 const express = require('express');
 
 const app = express();
