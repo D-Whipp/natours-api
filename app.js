@@ -6,22 +6,40 @@
 // 3: Use HTTP methods (verbs) - CRUD - POST, GET, PUT, PATCH, DELETE
 // 4: Send data as JSON (usually)
 // 5: Be stateless
+
 const fs = require('fs');
 const express = require('express');
 
 const app = express();
 
-// middleware
-// middleware is a function that can modify incoming data
+// *** Middleware ***
+// Middleware is a function that can modify incoming data
+// Middleware is a function that is executed between receiving the request and sending the response
+// Middleware executes in order so order matters
+// If a route exists before middleware that middleware won't execute because it comes after the route
+// express.json() returns a function and that function is added to the middleware stack
 app.use(express.json());
+// we can add functions to the middleware stack with 'app.use()'
+app.use((req, res, next) => {
+  console.log('Hello from the middleware');
+  // you NEED to call next or the req, res cycle would be stuck
+  next();
+});
+
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
+});
 
 const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
 );
 
 const getAllTours = (req, res) => {
+  console.log(req.requestTime);
   res.status(200).json({
     status: 'success',
+    requestedAt: req.requestTime,
     results: tours.length,
     data: {
       tours,
