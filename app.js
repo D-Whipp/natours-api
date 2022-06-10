@@ -9,10 +9,14 @@
 
 const fs = require('fs');
 const express = require('express');
+const morgan = require('morgan');
 
 const app = express();
 
 // *** Middleware ***
+
+app.use(morgan('dev'));
+
 // Middleware is a function that can modify incoming data
 // Middleware is a function that is executed between receiving the request and sending the response
 // Middleware executes in order so order matters
@@ -34,6 +38,8 @@ app.use((req, res, next) => {
 const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
 );
+
+// 2) Route Handlers
 
 const getAllTours = (req, res) => {
   console.log(req.requestTime);
@@ -128,6 +134,8 @@ const deleteTour = (req, res) => {
 // app.patch('/api/v1/tours/:id', updateTour);
 // app.delete('/api/v1/tours/:id', deleteTour);
 
+// 3) Routes
+
 app.route('/api/v1/tours').get(getAllTours).post(createTour);
 
 app
@@ -135,6 +143,8 @@ app
   .get(getTour)
   .patch(updateTour)
   .delete(deleteTour);
+
+// 4) Start Server
 
 const port = 3000;
 app.listen(port, () => {
