@@ -10,6 +10,8 @@ const tourController = require('../controllers/tourController');
 
 const router = express.Router();
 
+router.param('id', tourController.checkID);
+
 // all these routes are on the same router and that's the 'app' function
 router
   .route('/')
