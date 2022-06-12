@@ -26,10 +26,11 @@ app.use(morgan('dev'));
 app.use(express.json());
 // we can add functions to the middleware stack with 'app.use()'
 // app.use((req, res, next) => {
-  // console.log('Hello from the middleware');
-  // you NEED to call next or the req, res cycle would be stuck
-  // next();
+// console.log('Hello from the middleware');
+// you NEED to call next or the req, res cycle would be stuck
+// next();
 // });
+app.use(express.static(`${__dirname}/public`));
 
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
