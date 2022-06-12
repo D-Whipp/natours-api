@@ -4,8 +4,9 @@ const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
 );
 
+// middleware
 exports.checkID = (req, res, next, val) => {
-  console.log(`Tour id is: ${val}`);
+  // console.log(`Tour id is: ${val}`);
   if (req.params.id * 1 > tours.length) {
     return res.status(404).json({
       status: 'fail',
@@ -14,6 +15,24 @@ exports.checkID = (req, res, next, val) => {
   }
   next();
 };
+
+// Challenge
+// Create a checkBody middleware
+// Check if the body contains the name and price properties
+// If not send back 400 response
+// Add it to the post handler stack
+
+exports.checkBody = (req, res, next) => {
+  // console.log(`Check body is: ${val}`);
+  if (!req.body.name || !req.body.price) {
+    return res.status(400).json({
+      status: 'fail',
+      message: 'Missing name or price',
+    });
+  }
+  next();
+};
+// I was close, I didn't know that val would be ommited and i used !req.body
 
 // 2) Route Handlers/Controllers
 // *** Handlers === Controllers ***

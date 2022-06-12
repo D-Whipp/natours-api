@@ -25,11 +25,11 @@ app.use(morgan('dev'));
 // express.json() returns a function and that function is added to the middleware stack
 app.use(express.json());
 // we can add functions to the middleware stack with 'app.use()'
-app.use((req, res, next) => {
-  console.log('Hello from the middleware');
+// app.use((req, res, next) => {
+  // console.log('Hello from the middleware');
   // you NEED to call next or the req, res cycle would be stuck
-  next();
-});
+  // next();
+// });
 
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
