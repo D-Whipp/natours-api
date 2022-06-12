@@ -1,3 +1,5 @@
+// app.js ONLY holds code that CONFIGURES the express application
+
 // normally you keep all the express configuration in app.js
 // Restful API: Representational State Transfer
 // Building it requires following these principles:
@@ -15,8 +17,9 @@ const userRouter = require('./routes/userRoutes');
 const app = express();
 
 // *** Middleware ***
-
-app.use(morgan('dev'));
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 
 // Middleware is a function that can modify incoming data
 // Middleware is a function that is executed between receiving the request and sending the response
